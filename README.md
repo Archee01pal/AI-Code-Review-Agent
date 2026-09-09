@@ -1,47 +1,30 @@
-# Code Review Agent
+# 🔍 AI Code Review Agent
 
-An AI agent that reviews code for bugs, security issues, performance problems, and style violations.
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ai-code-review-agent-ga65psh7sybppqfpnpdebr.streamlit.app)
 
-**Framework**: LangChain  
-**LLM**: GPT-4o  
+An automated static code analysis agent built with **LangChain** and **Google Gemini** that reviews source code for runtime bugs, security vulnerabilities (e.g., SQL injection), performance bottlenecks, and PEP 8 style violations.
 
-## Setup
+🚀 **Live Demo:** [Try the Web App Here](https://ai-code-review-agent-ga65psh7sybppqfpnpdebr.streamlit.app)
 
+---
+
+## 🛠️ Tech Stack & Frameworks
+
+* **Language:** Python 3.11+
+* **Framework:** LangChain (`langchain-google-genai`)
+* **LLM Engine:** Google Gemini (`gemini-3.6-flash`)
+* **User Interface:** Streamlit & CLI (`argparse`)
+* **Environment Management:** `python-dotenv`
+
+---
+
+## 🚀 Quick Start (Local Setup)
+
+### 1. Clone & Install Dependencies
 ```bash
+git clone [https://github.com/Archee01pal/02-code-review-agent.git](https://github.com/Archee01pal/02-code-review-agent.git)
+cd 02-code-review-agent
+python -m venv venv
+# Activate virtual environment
+# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-```
-
-## Run
-
-```bash
-# Review a file
-python agent.py --file path/to/your/code.py
-
-# Review inline code
-python agent.py --code "def divide(a, b): return a / b"
-
-# Review non-Python code
-python agent.py --file app.js --language javascript
-```
-
-## Sample Output
-
-```
-🔍 Reviewing: example.py
-
-============================================================
-📋 CODE REVIEW
-============================================================
-## Overall: 🟡 Needs Work
-
-### 1. Bugs & Correctness
-- `divide(a, b)` has no zero-division check → `ZeroDivisionError` on `b=0`
-
-### 2. Security Issues
-- No input validation on external parameters
-
-### 3. Improvements
-- Add type hints: `def divide(a: float, b: float) -> float`
-- Raise `ValueError` for `b == 0` with descriptive message
-```
