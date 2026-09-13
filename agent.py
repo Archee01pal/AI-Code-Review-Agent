@@ -34,10 +34,28 @@ SYSTEM_PROMPT = """You are an expert code reviewer. Analyze the provided code an
 Format: Use markdown. Rate overall quality as: 🟢 Good / 🟡 Needs Work / 🔴 Critical Issues."""
 
 
+def get_api_key() -> str:
+    """Safely fetch API Key from Streamlit Secrets or Environment Variables."""
+    try:
+        import streamlit as st
+        if "GEMINI_API_KEY" in st.secrets:
+            return st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
+    
+    return os.getenv("GEMINI_API_KEY", "")
+
+
 def review_code(code: str, language: str = "python") -> str:
+    api_key = get_api_key()
+    
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY not found in Streamlit Secrets or environment variables.")
+
     llm = ChatGoogleGenerativeAI(
         model="gemini-3.6-flash",
-        google_api_key=os.getenv("GEMINI_API_KEY"),
+        google_api_key=api_key,
+        temperature=0.2
     )
 
     messages = [
